@@ -36,8 +36,10 @@ public class AirportService {
                         : cleanResultList;
             } catch (Exception e) {
                 System.out.println(e);
+                System.out.println("Exception occured at : " + alpha);
             }
         }
+
         return finalResultList;
     }
 
@@ -53,20 +55,32 @@ public class AirportService {
         );
     }
 
-    public Airport addAirport(Airport airport) {
-        return airportRepo.save(airport);
-    }
-
-    public List<Airport> updateAllAirports() {
-        List<List<String>> airports = requestAllAirportsWithTableHeader();
+    public List<Airport> buildAllAirports(@NonNull List<List<String>> airports) {
         int listSize = airports.size();
 
         List<Airport> airportsToReturn = new ArrayList<>();
         for (int i = 1; i < listSize; i++) {
             Airport airportToInsert = buildAirport(airports.get(i));
-            addAirport(airportToInsert);
             airportsToReturn.add(airportToInsert);
         }
+
+        return airportsToReturn;
+    }
+
+    public Airport addAirport(Airport airport) {
+        return airportRepo.save(airport);
+    }
+
+    public List<Airport> updateAllAirports() {
+        List<Airport> airports = buildAllAirports(requestAllAirportsWithTableHeader());
+        List<Airport> airportsToReturn = new ArrayList<>();
+        int listSize = airports.size();
+
+        // First of airports defines the former table header
+        for (int i = 1; i < listSize; i++) {
+            airportsToReturn.add(addAirport(airports.get(i)));
+        }
+
         return airportsToReturn;
     }
 
