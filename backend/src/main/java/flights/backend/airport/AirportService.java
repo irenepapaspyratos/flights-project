@@ -1,8 +1,6 @@
 package flights.backend.airport;
 
 import flights.backend.service.WebClientService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +17,13 @@ public class AirportService {
         this.airportRepo = airportRepo;
     }
 
-    @Autowired
-    MongoTemplate mongoTemplate;
-
     public List<List<String>> requestAllAirportsWithTableHeader() {
         String baseUrl = "https://www.wikitable2json.com/api/List_of_airports_by_IATA_airport_code:";
         List<List<String>> finalResultList = new ArrayList<>();
+        WebClientService call = new WebClientService();
 
         for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
             try {
-                WebClientService call = new WebClientService();
                 List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
                 System.out.println(alpha);
                 List<List<String>> resultList = singlePage.get(0);
@@ -62,14 +57,20 @@ public class AirportService {
         return airportRepo.save(airport);
     }
 
-    public List<List<String>> updateAllAirports() {
+    public List<Airport> updateAllAirports() {
         List<List<String>> airports = requestAllAirportsWithTableHeader();
         int listSize = airports.size();
 
+        List<Airport> airportsToReturn = new ArrayList<>();
         for (int i = 1; i < listSize; i++) {
             Airport airportToInsert = buildAirport(airports.get(i));
             addAirport(airportToInsert);
+            airportsToReturn.add(airportToInsert);
         }
-        return airports;
+        return airportsToReturn;
+    }
+
+    public List<Airport> getAllAirports() {
+        return airportRepo.findAll();
     }
 }
