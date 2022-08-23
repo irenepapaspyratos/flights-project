@@ -3,6 +3,7 @@ package flights.backend.airport;
 import flights.backend.exception.IdNotFoundException;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,9 @@ import static org.mockito.Mockito.*;
 class AirportServiceTest {
 
     private final AirportRepo airportRepoMock = mock(AirportRepo.class);
+
+    public AirportService airportServiceMock = mock(AirportService.class);
+
     private final AirportService airportService = new AirportService(airportRepoMock);
     public final AirportWithoutId airportFromApi1 = new AirportWithoutId(
             "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "");
@@ -106,11 +110,17 @@ class AirportServiceTest {
     }
 
     @Test
-    void addAllAirports() {
+    void addAllAirports() throws NoSuchFieldException, IllegalAccessException {
+        when(airportServiceMock.addAllAirports()).thenCallRealMethod();
+        when(airportServiceMock.requestAllAirports()).thenReturn(airportsFromApiList);
+        when(airportServiceMock.buildUUID()).thenReturn("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0")
+                .thenReturn("a0e72b0f-c5d5-430c-8da7-b1bed4db77f0");
         when(airportRepoMock.saveAll(airportList)).thenReturn(airportList);
-
-        List<Airport> actualResult = airportService.addAllAirports(airportsFromApiList);
-        verify(airportRepoMock, times(0)).saveAll(airportList);
+        Field repoField = AirportService.class.getDeclaredField("airportRepo");
+        repoField.setAccessible(true);
+        repoField.set(airportServiceMock, airportRepoMock);
+        airportServiceMock.addAllAirports();
+        verify(airportRepoMock, times(1)).saveAll(airportList);
     }
 
     @Test

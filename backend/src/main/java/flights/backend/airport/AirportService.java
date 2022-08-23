@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -51,13 +52,12 @@ public class AirportService {
         for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
             try {
                 List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
-                System.out.println(alpha);
                 List<AirportWithoutId> resultList = parse(singlePage);
                 finalResultList = !finalResultList.isEmpty() ?
                         Stream.concat(finalResultList.stream(), resultList.stream()).distinct().toList()
                         : resultList;
             } catch (Exception e) {
-                System.out.println("ERROR: " + alpha);
+                finalResultList = Collections.emptyList();
             }
         }
 
@@ -77,7 +77,8 @@ public class AirportService {
         return airportRepo.save(airport);
     }
 
-    public List<Airport> addAllAirports(@NonNull List<AirportWithoutId> airportApiList) {
+    public List<Airport> addAllAirports() {
+        List<AirportWithoutId> airportApiList = requestAllAirports();
         List<Airport> airportsToSave = new ArrayList<>();
 
         for (AirportWithoutId airportWithoutId : airportApiList) {
@@ -92,7 +93,6 @@ public class AirportService {
             );
             airportsToSave.add(airport);
         }
-        System.out.println(airportsToSave);
         return airportRepo.saveAll(airportsToSave);
     }
 

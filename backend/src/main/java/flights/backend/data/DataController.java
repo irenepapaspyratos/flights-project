@@ -15,6 +15,6 @@ public class DataController {
 
     @Scheduled(cron = "0 39 * * * ?")
     public void goUpdate() {
-        airportService.addAllAirports(airportService.requestAllAirports());
+        airportService.addAllAirports();
     }
 }
