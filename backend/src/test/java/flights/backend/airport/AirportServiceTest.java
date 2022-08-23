@@ -1,6 +1,7 @@
 package flights.backend.airport;
 
 import flights.backend.exception.IdNotFoundException;
+import flights.backend.service.UniqueId;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -15,19 +16,17 @@ import static org.mockito.Mockito.*;
 
 class AirportServiceTest {
 
+    private final UniqueId uniqueIdMock = mock(UniqueId.class);
     private final AirportRepo airportRepoMock = mock(AirportRepo.class);
 
     public AirportService airportServiceMock = mock(AirportService.class);
 
-    private final AirportService airportService = new AirportService(airportRepoMock);
+    private final UniqueId uniqueId = new UniqueId();
+    private final AirportService airportService = new AirportService(airportRepoMock, uniqueId);
     public final AirportWithoutId airportFromApi1 = new AirportWithoutId(
             "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "");
-    public final AirportWithoutId airportFromApi2 = new AirportWithoutId(
-            "BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov");
     public final Airport airport1 = new Airport(
             "d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "");
-    public final Airport airport2 = new Airport(
-            "a0e72b0f-c5d5-430c-8da7-b1bed4db77f0", "BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov");
     public final List<AirportWithoutId> airportsFromApiList = List.of(
             new AirportWithoutId("AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", ""),
             new AirportWithoutId("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov"));
@@ -113,13 +112,20 @@ class AirportServiceTest {
     void addAllAirports() throws NoSuchFieldException, IllegalAccessException {
         when(airportServiceMock.addAllAirports()).thenCallRealMethod();
         when(airportServiceMock.requestAllAirports()).thenReturn(airportsFromApiList);
-        when(airportServiceMock.buildUUID()).thenReturn("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0")
+        when(uniqueIdMock.buildUUID())
+                .thenReturn("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0")
                 .thenReturn("a0e72b0f-c5d5-430c-8da7-b1bed4db77f0");
+
         when(airportRepoMock.saveAll(airportList)).thenReturn(airportList);
+
         Field repoField = AirportService.class.getDeclaredField("airportRepo");
+        Field idField = AirportService.class.getDeclaredField("uniqueId");
         repoField.setAccessible(true);
+        idField.setAccessible(true);
         repoField.set(airportServiceMock, airportRepoMock);
+        idField.set(airportServiceMock, uniqueIdMock);
         airportServiceMock.addAllAirports();
+
         verify(airportRepoMock, times(1)).saveAll(airportList);
     }
 

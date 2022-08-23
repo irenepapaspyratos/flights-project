@@ -1,6 +1,7 @@
 package flights.backend.airport;
 
 import flights.backend.exception.IdNotFoundException;
+import flights.backend.service.UniqueId;
 import flights.backend.service.WebClientService;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -8,23 +9,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
 public class AirportService {
+    public final UniqueId uniqueId;
     private final AirportRepo airportRepo;
 
-    public AirportService(AirportRepo airportRepo) {
+    public AirportService(AirportRepo airportRepo, UniqueId uniqueId) {
         this.airportRepo = airportRepo;
+        this.uniqueId = uniqueId;
     }
 
-    public String buildUUID() {
-        return UUID.randomUUID().toString();
-    }
-
-    public static List<AirportWithoutId> parse(@NonNull List<List<List<String>>> listApi) {
-        return listApi.stream().flatMap(
+    public static List<AirportWithoutId> parse(@NonNull List<List<List<String>>> airportListFromApi) {
+        return airportListFromApi.stream().flatMap(
                 resultList -> resultList.stream()
                         .filter(result ->
                                 !result.isEmpty() && !result.get(0).equals("IATA") && !result.get(0).equals("ICAO")
@@ -66,7 +64,7 @@ public class AirportService {
 
     public Airport addAirport(@NonNull AirportWithoutId airportFromApi) {
         Airport airport = new Airport(
-                buildUUID(),
+                uniqueId.buildUUID(),
                 airportFromApi.iata(),
                 airportFromApi.icao(),
                 airportFromApi.airportName(),
@@ -83,7 +81,7 @@ public class AirportService {
 
         for (AirportWithoutId airportWithoutId : airportApiList) {
             Airport airport = new Airport(
-                    buildUUID(),
+                    uniqueId.buildUUID(),
                     airportWithoutId.iata(),
                     airportWithoutId.icao(),
                     airportWithoutId.airportName(),
