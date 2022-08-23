@@ -22,19 +22,23 @@ public class AirportService {
         return UUID.randomUUID().toString();
     }
 
-    public static List<AirportWithoutId> parse(List<List<List<String>>> listApi) {
+    public static List<AirportWithoutId> parse(@NonNull List<List<List<String>>> listApi) {
         return listApi.stream().flatMap(
                 resultList -> resultList.stream()
-                        .filter(result -> !result.get(0).equals("IATA") && !result.get(0).equals("ICAO"))
-                        .filter(result -> !result.get(0).equals(result.get(1)) && !result.get(0).equals(result.get(2)))
+                        .filter(result ->
+                                !result.isEmpty() && !result.get(0).equals("IATA") && !result.get(0).equals("ICAO")
+                        )
+                        .filter(result ->
+                                !result.get(0).equals(result.get(1)) && !result.get(0).equals(result.get(2))
+                        )
                         .map(result ->
                                 new AirportWithoutId(
                                         result.get(0),
                                         result.get(1),
                                         result.get(2),
-                                        result.get(3),
-                                        result.get(4),
-                                        result.get(5)
+                                        result.size() < 4 ? "" : result.get(3),
+                                        result.size() < 5 ? "" : result.get(4),
+                                        result.size() < 6 ? "" : result.get(5)
                                 ))
         ).distinct().toList();
     }
@@ -49,7 +53,6 @@ public class AirportService {
                 List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
                 System.out.println(alpha);
                 List<AirportWithoutId> resultList = parse(singlePage);
-
                 finalResultList = !finalResultList.isEmpty() ?
                         Stream.concat(finalResultList.stream(), resultList.stream()).distinct().toList()
                         : resultList;
@@ -74,15 +77,23 @@ public class AirportService {
         return airportRepo.save(airport);
     }
 
-    public List<Airport> updateAllAirports(@NonNull List<AirportWithoutId> airportApiList) {
-        List<Airport> airportsToReturn = new ArrayList<>();
-        int listSize = airportApiList.size();
+    public List<Airport> addAllAirports(@NonNull List<AirportWithoutId> airportApiList) {
+        List<Airport> airportsToSave = new ArrayList<>();
 
-        // First of List defines the former table header
-        for (int i = 1; i < listSize; i++) {
-            airportsToReturn.add(addAirport(airportApiList.get(i)));
+        for (AirportWithoutId airportWithoutId : airportApiList) {
+            Airport airport = new Airport(
+                    buildUUID(),
+                    airportWithoutId.iata(),
+                    airportWithoutId.icao(),
+                    airportWithoutId.airportName(),
+                    airportWithoutId.locationServed(),
+                    airportWithoutId.time(),
+                    airportWithoutId.dst()
+            );
+            airportsToSave.add(airport);
         }
-        return airportsToReturn;
+        System.out.println(airportsToSave);
+        return airportRepo.saveAll(airportsToSave);
     }
 
     public Airport getAirportById(String id) {

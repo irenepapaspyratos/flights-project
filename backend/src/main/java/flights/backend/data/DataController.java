@@ -13,8 +13,8 @@ public class DataController {
 
     private final AirportService airportService;
 
-    @Scheduled(cron = "0 0 0 */1 * ?")
+    @Scheduled(cron = "0 39 * * * ?")
     public void goUpdate() {
-        airportService.updateAllAirports();
+        airportService.addAllAirports(airportService.requestAllAirports());
     }
 }

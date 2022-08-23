@@ -1,14 +1,16 @@
 package flights.backend.airport;
 
+import flights.backend.exception.IdNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AirportServiceTest {
 
@@ -32,7 +34,7 @@ class AirportServiceTest {
 
 
     @Test
-    void parseEmpty() {
+    void parse_empty() {
         //given
         List<List<List<String>>> listOfApi = Collections.emptyList();
         //when
@@ -42,7 +44,7 @@ class AirportServiceTest {
     }
 
     @Test
-    void parseOne() {
+    void parse_one() {
         List<List<List<String>>> listOfApi = Collections.singletonList(Collections.singletonList(List.of("AAA", "NTGA", "Anaa Airport",
                 "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "")));
 
@@ -53,7 +55,7 @@ class AirportServiceTest {
     }
 
     @Test
-    void parseList() {
+    void parse_list() {
         List<List<List<String>>> listOfApi = Collections.singletonList(List.of(
                 List.of("AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", ""),
                 List.of("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
@@ -68,7 +70,7 @@ class AirportServiceTest {
     }
 
     @Test
-    void parseListFilteredTableHead() {
+    void parse_listWithFilteredTableHead() {
         List<List<List<String>>> listOfApi = Collections.singletonList(List.of(
                 List.of("IATA", "ICAO", "Airport name", "Location served", "Time", "DST"),
                 List.of("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
@@ -82,7 +84,7 @@ class AirportServiceTest {
     }
 
     @Test
-    void parseListFilteredSeperator() {
+    void parse_listWithFilteredSeparator() {
         List<List<List<String>>> listOfApi = Collections.singletonList(List.of(
                 List.of("-CA-", "-CA-", "-CA-", "-CA-", "-CA-", "-CA-"),
                 List.of("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
@@ -101,6 +103,32 @@ class AirportServiceTest {
 
         Airport actualResult = airportService.addAirport(airportFromApi1);
         assertThat(actualResult).isEqualTo(airport1);
+    }
+
+    @Test
+    void addAllAirports() {
+        when(airportRepoMock.saveAll(airportList)).thenReturn(airportList);
+
+        List<Airport> actualResult = airportService.addAllAirports(airportsFromApiList);
+        verify(airportRepoMock, times(0)).saveAll(airportList);
+    }
+
+    @Test
+    void getAirportById_existing() {
+        when(airportRepoMock.findById(any(String.class))).thenReturn(Optional.of(airport1));
+
+        Airport actualResult = airportService.getAirportById("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0");
+        assertThat(actualResult).isEqualTo(
+                new Airport("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "")
+        );
+    }
+
+    @Test
+    void getAirportById_nonExisting() {
+        when(airportRepoMock.findById(any(String.class))).thenThrow(new IdNotFoundException("NonExistingId"));
+
+        assertThatExceptionOfType(IdNotFoundException.class)
+                .isThrownBy(() -> airportService.getAirportById("NonExistingId"));
     }
 
     @Test
