@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -37,7 +36,7 @@ public class AirportService {
                                         result.get(4),
                                         result.get(5)
                                 ))
-        ).distinct().collect(Collectors.toList());
+        ).distinct().toList();
     }
 
     public List<AirportWithoutId> requestAllAirports() {
