@@ -1,5 +1,6 @@
 package flights.backend.service;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -7,11 +8,12 @@ import java.util.List;
 public class WebClientService {
     WebClient webClient = WebClient.create();
 
-    public List getOneIataPage(String url) {
+    public List<List<List<String>>> getOneIataPage(String url) {
         return webClient.get()
                 .uri(url)
                 .retrieve()
-                .toEntity(List.class)
+                .toEntity(new ParameterizedTypeReference<List<List<List<String>>>>() {
+                })
                 .block()
                 .getBody();
     }

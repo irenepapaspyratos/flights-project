@@ -1,5 +1,6 @@
 package flights.backend.airport;
 
+import flights.backend.exception.IdNotFoundException;
 import flights.backend.service.WebClientService;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -17,71 +19,75 @@ public class AirportService {
         this.airportRepo = airportRepo;
     }
 
-    public List<List<String>> requestAllAirportsWithTableHeader() {
+    public String buildUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    public static List<AirportWithoutId> parse(List<List<List<String>>> listApi) {
+        return listApi.stream().flatMap(
+                resultList -> resultList.stream()
+                        .filter(result -> !result.get(0).equals("IATA") && !result.get(0).equals("ICAO"))
+                        .filter(result -> !result.get(0).equals(result.get(1)) && !result.get(0).equals(result.get(2)))
+                        .map(result ->
+                                new AirportWithoutId(
+                                        result.get(0),
+                                        result.get(1),
+                                        result.get(2),
+                                        result.get(3),
+                                        result.get(4),
+                                        result.get(5)
+                                ))
+        ).distinct().collect(Collectors.toList());
+    }
+
+    public List<AirportWithoutId> requestAllAirports() {
         String baseUrl = "https://www.wikitable2json.com/api/List_of_airports_by_IATA_airport_code:";
-        List<List<String>> finalResultList = new ArrayList<>();
+        List<AirportWithoutId> finalResultList = new ArrayList<>();
         WebClientService call = new WebClientService();
 
         for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
             try {
                 List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
                 System.out.println(alpha);
-                List<List<String>> resultList = singlePage.get(0);
-                List<List<String>> cleanResultList = resultList.stream()
-                        .filter(r -> !r.get(0).equals(r.get(1)) && !r.get(0).equals(r.get(2)))
-                        .toList();
+                List<AirportWithoutId> resultList = parse(singlePage);
 
                 finalResultList = !finalResultList.isEmpty() ?
-                        Stream.concat(finalResultList.stream(), cleanResultList.stream()).distinct().toList()
-                        : cleanResultList;
+                        Stream.concat(finalResultList.stream(), resultList.stream()).distinct().toList()
+                        : resultList;
             } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("Exception occured at : " + alpha);
+                System.out.println("ERROR: " + alpha);
             }
         }
 
         return finalResultList;
     }
 
-    public Airport buildAirport(@NonNull List<String> attributesList) {
-        return new Airport(
-                UUID.randomUUID().toString(),
-                attributesList.get(0),
-                attributesList.get(1),
-                attributesList.get(2),
-                attributesList.get(3),
-                attributesList.get(4),
-                attributesList.get(5)
+    public Airport addAirport(@NonNull AirportWithoutId airportFromApi) {
+        Airport airport = new Airport(
+                buildUUID(),
+                airportFromApi.iata(),
+                airportFromApi.icao(),
+                airportFromApi.airportName(),
+                airportFromApi.locationServed(),
+                airportFromApi.time(),
+                airportFromApi.dst()
         );
-    }
-
-    public List<Airport> buildAllAirports(@NonNull List<List<String>> airports) {
-        int listSize = airports.size();
-
-        List<Airport> airportsToReturn = new ArrayList<>();
-        for (int i = 1; i < listSize; i++) {
-            Airport airportToInsert = buildAirport(airports.get(i));
-            airportsToReturn.add(airportToInsert);
-        }
-
-        return airportsToReturn;
-    }
-
-    public Airport addAirport(Airport airport) {
         return airportRepo.save(airport);
     }
 
-    public List<Airport> updateAllAirports() {
-        List<Airport> airports = buildAllAirports(requestAllAirportsWithTableHeader());
+    public List<Airport> updateAllAirports(@NonNull List<AirportWithoutId> airportApiList) {
         List<Airport> airportsToReturn = new ArrayList<>();
-        int listSize = airports.size();
+        int listSize = airportApiList.size();
 
-        // First of airports defines the former table header
+        // First of List defines the former table header
         for (int i = 1; i < listSize; i++) {
-            airportsToReturn.add(addAirport(airports.get(i)));
+            airportsToReturn.add(addAirport(airportApiList.get(i)));
         }
-
         return airportsToReturn;
+    }
+
+    public Airport getAirportById(String id) {
+        return airportRepo.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
 
     public List<Airport> getAllAirports() {
