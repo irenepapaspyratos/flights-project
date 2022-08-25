@@ -2,7 +2,7 @@ package flights.backend.exception;
 
 import flights.backend.airport.AirportRepo;
 import flights.backend.airport.AirportService;
-import flights.backend.service.UniqueId;
+import flights.backend.service.UniqueIdService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
@@ -15,8 +15,8 @@ import static org.mockito.Mockito.when;
 class GlobalExceptionHandlerTest {
 
     private final AirportRepo airportRepoMock = mock(AirportRepo.class);
-    public UniqueId uniqueId = new UniqueId();
-    public AirportService airportService = new AirportService(airportRepoMock, uniqueId);
+    public UniqueIdService uniqueIdService = new UniqueIdService();
+    public AirportService airportService = new AirportService(airportRepoMock, uniqueIdService);
 
     @Test
     void getAirportById_nonExisting() {

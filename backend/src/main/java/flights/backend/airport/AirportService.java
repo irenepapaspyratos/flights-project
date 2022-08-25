@@ -1,8 +1,9 @@
 package flights.backend.airport;
 
 import flights.backend.exception.IdNotFoundException;
-import flights.backend.service.UniqueId;
+import flights.backend.service.UniqueIdService;
 import flights.backend.service.WebClientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,12 @@ import java.util.stream.Stream;
 
 @Service
 public class AirportService {
-    public final UniqueId uniqueId;
+    public final UniqueIdService uniqueIdService;
     private final AirportRepo airportRepo;
 
-    public AirportService(AirportRepo airportRepo, UniqueId uniqueId) {
+    public AirportService(AirportRepo airportRepo, UniqueIdService uniqueIdService) {
         this.airportRepo = airportRepo;
-        this.uniqueId = uniqueId;
+        this.uniqueIdService = uniqueIdService;
     }
 
     public static List<AirportWithoutId> parse(@NonNull List<List<List<String>>> airportListFromApi) {
@@ -49,7 +50,8 @@ public class AirportService {
 
         for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
             try {
-                List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
+                List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha).getBody();
+                assert singlePage != null;
                 List<AirportWithoutId> resultList = parse(singlePage);
                 finalResultList = !finalResultList.isEmpty() ?
                         Stream.concat(finalResultList.stream(), resultList.stream()).distinct().toList()
@@ -64,7 +66,7 @@ public class AirportService {
 
     public Airport addAirport(@NonNull AirportWithoutId airportFromApi) {
         Airport airport = new Airport(
-                uniqueId.buildUUID(),
+                uniqueIdService.buildUUID(),
                 airportFromApi.iata(),
                 airportFromApi.icao(),
                 airportFromApi.airportName(),
@@ -77,20 +79,45 @@ public class AirportService {
 
     public List<Airport> addAllAirports() {
         List<AirportWithoutId> airportApiList = requestAllAirports();
+        assert !airportApiList.isEmpty();
         List<Airport> airportsToSave = new ArrayList<>();
 
         for (AirportWithoutId airportWithoutId : airportApiList) {
-            Airport airport = new Airport(
-                    uniqueId.buildUUID(),
-                    airportWithoutId.iata(),
-                    airportWithoutId.icao(),
-                    airportWithoutId.airportName(),
-                    airportWithoutId.locationServed(),
-                    airportWithoutId.time(),
-                    airportWithoutId.dst()
-            );
+            Airport airport =
+                    new Airport(
+                            uniqueIdService.buildUUID(),
+                            airportWithoutId.iata(),
+                            airportWithoutId.icao(),
+                            airportWithoutId.airportName(),
+                            airportWithoutId.locationServed(),
+                            airportWithoutId.time(),
+                            airportWithoutId.dst()
+                    );
             airportsToSave.add(airport);
         }
+        return airportRepo.saveAll(airportsToSave);
+    }
+
+    public List<Airport> upsertAllAirports() {
+        List<AirportWithoutId> airportApiList = requestAllAirports();
+        assert !airportApiList.isEmpty();
+        List<Airport> airportsToSave = new ArrayList<>();
+
+        for (AirportWithoutId airportWithoutId : airportApiList) {
+            Airport airportToUpdate =
+                    new Airport(
+                            airportRepo.findAirportByIata(airportWithoutId.iata()) != null ?
+                                    airportRepo.findAirportByIata(airportWithoutId.iata()).id() : uniqueIdService.buildUUID(),
+                            airportWithoutId.iata(),
+                            airportWithoutId.icao(),
+                            airportWithoutId.airportName(),
+                            airportWithoutId.locationServed(),
+                            airportWithoutId.time(),
+                            airportWithoutId.dst()
+                    );
+            airportsToSave.add(airportToUpdate);
+        }
+
         return airportRepo.saveAll(airportsToSave);
     }
 
@@ -98,7 +125,10 @@ public class AirportService {
         return airportRepo.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
 
-    public List<Airport> getAllAirports() {
-        return airportRepo.findAll();
+    public ResponseEntity<List<Airport>> getAllAirports() {
+
+        return airportRepo.findAll().isEmpty() ?
+                ResponseEntity.status(204).body(Collections.emptyList())
+                : ResponseEntity.status(200).body(airportRepo.findAll());
     }
 }
