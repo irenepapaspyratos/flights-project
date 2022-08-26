@@ -128,28 +128,7 @@ class AirportServiceTest {
 
         verify(airportRepoMock, times(1)).saveAll(airportList);
     }
-
-    @Test
-    void upsertAllAirports() throws NoSuchFieldException, IllegalAccessException, AssertionError {
-        when(airportServiceMock.upsertAllAirports()).thenCallRealMethod();
-        when(airportServiceMock.requestAllAirports()).thenReturn(airportsFromApiList);
-        when(uniqueIdServiceMock.buildUUID())
-                .thenReturn("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0")
-                .thenReturn("a0e72b0f-c5d5-430c-8da7-b1bed4db77f0");
-
-        when(airportRepoMock.saveAll(airportList)).thenReturn(airportList);
-
-        Field repoField = AirportService.class.getDeclaredField("airportRepo");
-        Field idField = AirportService.class.getDeclaredField("uniqueIdService");
-        repoField.setAccessible(true);
-        idField.setAccessible(true);
-        repoField.set(airportServiceMock, airportRepoMock);
-        idField.set(airportServiceMock, uniqueIdServiceMock);
-        airportServiceMock.addAllAirports();
-
-        verify(airportRepoMock, times(1)).saveAll(airportList);
-    }
-
+    
     @Test
     void getAirportById_existing() {
         when(airportRepoMock.findById(any(String.class))).thenReturn(Optional.of(airport1));
