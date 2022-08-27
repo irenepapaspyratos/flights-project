@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -22,7 +21,7 @@ public class DataController {
 
     @Scheduled(cron = "${fetch-rate:0 0 0 1 * ?}")
     public void goUpdate() {
-        if (airportService.getAllAirports().equals(ResponseEntity.status(204).body(Collections.emptyList()))) {
+        if (airportService.getAllAirports().isEmpty()) {
             airportService.addAllAirports();
         } else {
             airportService.upsertAllAirports();
@@ -31,7 +30,22 @@ public class DataController {
 
     @GetMapping("/airports")
     public List<Airport> getAllAirports() {
-        return airportService.getAllAirports().getBody();
+        return airportService.getAllAirports();
+    }
+
+    @GetMapping("/airports/id/{id}")
+    public Airport getAirportById(@PathVariable String id) {
+        return airportService.getAirportById(id);
+    }
+
+    @GetMapping("/airports/iata/{iata}")
+    public Airport getAirportByIata(@PathVariable String iata) {
+        return airportService.getAirportByIata(iata);
+    }
+
+    @GetMapping("/airports/icao/{icao}")
+    public Airport getAirportByIcao(@PathVariable String icao) {
+        return airportService.getAirportByIcao(icao);
     }
 
     @PostMapping("/airports")

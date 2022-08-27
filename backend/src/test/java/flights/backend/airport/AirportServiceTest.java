@@ -1,5 +1,7 @@
 package flights.backend.airport;
 
+import flights.backend.exception.IataNotFoundException;
+import flights.backend.exception.IcaoNotFoundException;
 import flights.backend.exception.IdNotFoundException;
 import flights.backend.service.UniqueIdService;
 import org.junit.jupiter.api.Test;
@@ -128,7 +130,29 @@ class AirportServiceTest {
 
         verify(airportRepoMock, times(1)).saveAll(airportList);
     }
-    
+
+    @Test
+    void upsertAllAirports_OneUpdateOneInsert() throws NoSuchFieldException, IllegalAccessException, AssertionError {
+        when(airportServiceMock.upsertAllAirports()).thenCallRealMethod();
+        when(airportServiceMock.requestAllAirports()).thenReturn(airportsFromApiList);
+        when(uniqueIdServiceMock.buildUUID())
+                .thenReturn("a0e72b0f-c5d5-430c-8da7-b1bed4db77f0");
+
+        when(airportRepoMock.findAirportByIata("AAA")).thenReturn(airport1);
+        when(airportRepoMock.findAirportByIata("BDA")).thenReturn(null);
+        when(airportRepoMock.saveAll(airportList)).thenReturn(airportList);
+
+        Field repoField = AirportService.class.getDeclaredField("airportRepo");
+        Field idField = AirportService.class.getDeclaredField("uniqueIdService");
+        repoField.setAccessible(true);
+        idField.setAccessible(true);
+        repoField.set(airportServiceMock, airportRepoMock);
+        idField.set(airportServiceMock, uniqueIdServiceMock);
+        airportServiceMock.upsertAllAirports();
+
+        verify(airportRepoMock, times(1)).saveAll(airportList);
+    }
+
     @Test
     void getAirportById_existing() {
         when(airportRepoMock.findById(any(String.class))).thenReturn(Optional.of(airport1));
@@ -148,10 +172,47 @@ class AirportServiceTest {
     }
 
     @Test
+    void getAirportByIata_existing() {
+        when(airportRepoMock.findAirportByIata("AAA")).thenReturn(airport1);
+
+        Airport actualResult = airportService.getAirportByIata("AAA");
+        assertThat(actualResult).isEqualTo(
+                new Airport("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "")
+        );
+    }
+
+    @Test
+    void getAirportByIata_nonExisting() {
+        when(airportRepoMock.findAirportByIata(any(String.class))).thenThrow(new IataNotFoundException("NonExistingId"));
+
+        assertThatExceptionOfType(IataNotFoundException.class)
+                .isThrownBy(() -> airportService.getAirportByIata("NonExistingId"));
+    }
+
+    @Test
+    void getAirportByIcao_existing() {
+        when(airportRepoMock.findAirportByIcao("NTGA")).thenReturn(airport1);
+
+        Airport actualResult = airportService.getAirportByIcao("NTGA");
+        assertThat(actualResult).isEqualTo(
+                new Airport("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "")
+        );
+    }
+
+    @Test
+    void getAirportByIcao_nonExisting() {
+        when(airportRepoMock.findAirportByIcao(any(String.class))).thenThrow(new IcaoNotFoundException("NonExistingIcao"));
+
+        assertThatExceptionOfType(IcaoNotFoundException.class)
+                .isThrownBy(() -> airportService.getAirportByIcao("NonExistingId"));
+    }
+
+    @Test
     void getAllAirports() {
         when(airportRepoMock.findAll()).thenReturn(airportList);
 
-        List<Airport> actualResult = airportService.getAllAirports().getBody();
+        List<Airport> actualResult = airportService.getAllAirports();
+
         assertThat(actualResult).containsExactly(
                 new Airport("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", ""),
                 new Airport("a0e72b0f-c5d5-430c-8da7-b1bed4db77f0", "BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
@@ -162,7 +223,7 @@ class AirportServiceTest {
     void getAllAirports_emptyDB() {
         when(airportRepoMock.findAll()).thenReturn(Collections.emptyList());
 
-        List<Airport> actualResult = airportService.getAllAirports().getBody();
+        List<Airport> actualResult = airportService.getAllAirports();
         assertThat(actualResult).containsExactly();
     }
 }

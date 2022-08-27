@@ -21,4 +21,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IataNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleIataNotFoundException(IataNotFoundException exception) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", LocalDateTime.now());
+        responseBody.put("message_key", "IATA_NOT_FOUND");
+
+        return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IcaoNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleIcaoNotFoundException(IcaoNotFoundException exception) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", LocalDateTime.now());
+        responseBody.put("message_key", "ICAO_NOT_FOUND");
+
+        return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
+    }
 }

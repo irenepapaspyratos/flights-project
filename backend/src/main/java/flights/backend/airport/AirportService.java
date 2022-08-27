@@ -1,9 +1,10 @@
 package flights.backend.airport;
 
+import flights.backend.exception.IataNotFoundException;
+import flights.backend.exception.IcaoNotFoundException;
 import flights.backend.exception.IdNotFoundException;
 import flights.backend.service.UniqueIdService;
 import flights.backend.service.WebClientService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +51,13 @@ public class AirportService {
 
         for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
             try {
-                List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha).getBody();
+                List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
                 assert singlePage != null;
                 List<AirportWithoutId> resultList = parse(singlePage);
-                finalResultList = !finalResultList.isEmpty() ?
-                        Stream.concat(finalResultList.stream(), resultList.stream()).distinct().toList()
-                        : resultList;
+                finalResultList =
+                        !finalResultList.isEmpty() ?
+                                Stream.concat(finalResultList.stream(), resultList.stream()).distinct().toList()
+                                : resultList;
             } catch (Exception e) {
                 finalResultList = Collections.emptyList();
             }
@@ -125,10 +127,19 @@ public class AirportService {
         return airportRepo.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
 
-    public ResponseEntity<List<Airport>> getAllAirports() {
+    public Airport getAirportByIata(String iata) {
+        if (airportRepo.findAirportByIata(iata) != null)
+            return airportRepo.findAirportByIata(iata);
+        throw new IataNotFoundException(iata);
+    }
 
-        return airportRepo.findAll().isEmpty() ?
-                ResponseEntity.status(204).body(Collections.emptyList())
-                : ResponseEntity.status(200).body(airportRepo.findAll());
+    public Airport getAirportByIcao(String icao) {
+        if (airportRepo.findAirportByIcao(icao) != null)
+            return airportRepo.findAirportByIcao(icao);
+        throw new IcaoNotFoundException(icao);
+    }
+
+    public List<Airport> getAllAirports() {
+        return airportRepo.findAll();
     }
 }
