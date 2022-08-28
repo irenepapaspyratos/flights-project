@@ -62,5 +62,4 @@ class WebClientServiceTest {
         List<List<List<String>>> response = webClient.getOneIataPage(mockWebServer.url("localhost/").toString());
         assertThat(response).isNull();
     }
-
 }
