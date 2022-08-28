@@ -48,4 +48,19 @@ class WebClientServiceTest {
         assertThat(response).hasToString("""
                 [[[AAA, NTGA, Anaa Airport, Anaa, Tuamotus, French Polynesia, UTC−10:00, ]]]""");
     }
+
+    @DirtiesContext
+    @Test
+    void getOneIataPage_null() {
+
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .setBody(""));
+
+        List<List<List<String>>> response = webClient.getOneIataPage(mockWebServer.url("localhost/").toString());
+        assertThat(response).isNull();
+    }
+
 }
