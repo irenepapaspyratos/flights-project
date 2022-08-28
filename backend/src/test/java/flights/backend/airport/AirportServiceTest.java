@@ -116,7 +116,7 @@ class AirportServiceTest {
     @Test
     void requestAllAirports_emptyListFromApi() {
         when(webClientServiceMock.getOneIataPage(any(String.class))).thenReturn(Collections.emptyList());
-        assertThat(airportService2.requestAllAirports()).containsExactly();
+        assertThat(airportService2.requestAllAirports()).isEqualTo(Collections.emptyList());
     }
 
     @Test
