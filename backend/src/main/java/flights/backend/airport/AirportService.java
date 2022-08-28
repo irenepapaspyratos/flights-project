@@ -15,12 +15,14 @@ import java.util.stream.Stream;
 
 @Service
 public class AirportService {
-    public final UniqueIdService uniqueIdService;
+    private final UniqueIdService uniqueIdService;
     private final AirportRepo airportRepo;
+    private final WebClientService webClientService;
 
-    public AirportService(AirportRepo airportRepo, UniqueIdService uniqueIdService) {
+    public AirportService(AirportRepo airportRepo, UniqueIdService uniqueIdService, WebClientService webClientService) {
         this.airportRepo = airportRepo;
         this.uniqueIdService = uniqueIdService;
+        this.webClientService = webClientService;
     }
 
     public static List<AirportWithoutId> parse(@NonNull List<List<List<String>>> airportListFromApi) {
@@ -47,11 +49,10 @@ public class AirportService {
     public List<AirportWithoutId> requestAllAirports() {
         String baseUrl = "https://www.wikitable2json.com/api/List_of_airports_by_IATA_airport_code:";
         List<AirportWithoutId> finalResultList = new ArrayList<>();
-        WebClientService call = new WebClientService();
 
         for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
             try {
-                List<List<List<String>>> singlePage = call.getOneIataPage(baseUrl + "_" + alpha);
+                List<List<List<String>>> singlePage = webClientService.getOneIataPage(baseUrl + "_" + alpha);
                 assert singlePage != null;
                 List<AirportWithoutId> resultList = parse(singlePage);
                 finalResultList =

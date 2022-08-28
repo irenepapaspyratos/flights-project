@@ -4,6 +4,7 @@ import flights.backend.exception.IataNotFoundException;
 import flights.backend.exception.IcaoNotFoundException;
 import flights.backend.exception.IdNotFoundException;
 import flights.backend.service.UniqueIdService;
+import flights.backend.service.WebClientService;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -20,22 +21,25 @@ class AirportServiceTest {
 
     private final UniqueIdService uniqueIdServiceMock = mock(UniqueIdService.class);
     private final AirportRepo airportRepoMock = mock(AirportRepo.class);
-
-    public AirportService airportServiceMock = mock(AirportService.class);
+    private final AirportService airportServiceMock = mock(AirportService.class);
+    private final WebClientService webClientServiceMock = mock(WebClientService.class);
 
     private final UniqueIdService uniqueIdService = new UniqueIdService();
-    private final AirportService airportService = new AirportService(airportRepoMock, uniqueIdService);
-    public final AirportWithoutId airportFromApi1 = new AirportWithoutId(
+    private final WebClientService webClientService = new WebClientService();
+    private final AirportService airportService = new AirportService(airportRepoMock, uniqueIdService, webClientService);
+    private final AirportService airportService2 = new AirportService(airportRepoMock, uniqueIdService, webClientServiceMock);
+    private final AirportWithoutId airportFromApi1 = new AirportWithoutId(
             "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "");
-    public final Airport airport1 = new Airport(
+    private final Airport airport1 = new Airport(
             "d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "");
-    public final List<AirportWithoutId> airportsFromApiList = List.of(
+    private final List<AirportWithoutId> airportsFromApiList = List.of(
             new AirportWithoutId("AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", ""),
             new AirportWithoutId("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov"));
-    public final List<Airport> airportList = List.of(
+    private final List<Airport> airportList = List.of(
             new Airport("d7bc902b-8691-4ce6-aee3-c9faaef0c2d0", "AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", ""),
             new Airport("a0e72b0f-c5d5-430c-8da7-b1bed4db77f0", "BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
     );
+    private final List<List<List<String>>> rawApiList = Collections.singletonList(Collections.singletonList(List.of("AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "")));
 
 
     @Test
@@ -100,6 +104,19 @@ class AirportServiceTest {
         assertThat(actual).containsExactly(
                 new AirportWithoutId("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
         );
+    }
+
+
+    @Test
+    void requestAllAirports() {
+        when(webClientServiceMock.getOneIataPage(any(String.class))).thenReturn(rawApiList);
+        assertThat(airportService2.requestAllAirports()).isEqualTo(List.of(airportFromApi1));
+    }
+
+    @Test
+    void requestAllAirports_emptyListFromApi() {
+        when(webClientServiceMock.getOneIataPage(any(String.class))).thenReturn(Collections.emptyList());
+        assertThat(airportService2.requestAllAirports()).containsExactly();
     }
 
     @Test
