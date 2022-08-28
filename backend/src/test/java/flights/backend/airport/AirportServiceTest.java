@@ -41,7 +41,6 @@ class AirportServiceTest {
     );
     private final List<List<List<String>>> rawApiList = Collections.singletonList(Collections.singletonList(List.of("AAA", "NTGA", "Anaa Airport", "Anaa, Tuamotus, French Polynesia", "UTC−10:00", "")));
 
-
     @Test
     void parse_empty() {
         //given
@@ -105,7 +104,6 @@ class AirportServiceTest {
                 new AirportWithoutId("BDA", "TXKF", "L.F. Wade International Airport", "Hamilton, British Overseas Territory of Bermuda", "UTC−04:00", "Mar-Nov")
         );
     }
-
 
     @Test
     void requestAllAirports() {
