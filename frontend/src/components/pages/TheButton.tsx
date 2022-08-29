@@ -22,8 +22,7 @@ export default function TheButton() {
             <ul>
                 {show && airports?.map(airport => {
                     return <li key={airport.id}>{airport.iata} {airport.airportName}</li>
-                })
-                }
+                })}
             </ul>
         </MainStyled>
     );
