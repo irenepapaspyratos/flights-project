@@ -2,7 +2,6 @@ package flights.backend.airport;
 
 import org.springframework.data.annotation.Id;
 
-@Document(collection = "airports")
 public record Airport(
         @Id String id,
         String iata,
