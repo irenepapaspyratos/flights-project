@@ -1,6 +1,11 @@
 import {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+    :root {
+        --color-primary-dark: #001D29;
+        --color-primary-light: #E9E9ED;
+    }
+
     * {
         box-sizing: border-box;
         margin: 0;
@@ -9,8 +14,8 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         height: 100vh;
-
-        background-image: linear-gradient(to bottom white, black);
+        background-color: var(--color-primary-dark);
+        color: var(--color-primary-dark);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;

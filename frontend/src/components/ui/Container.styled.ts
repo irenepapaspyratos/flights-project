@@ -9,7 +9,7 @@ const ContainerStyled = styled.div<{ path: string }>`
     ${({path}) =>
             path === '/' &&
             css`
-                background-image: url("/BirdPlaneSearching.jpg");
+                background-image: url("/images/BirdPlaneSearching.jpg");
             `
     };
 `;

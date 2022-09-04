@@ -3,13 +3,13 @@ import styled from "styled-components";
 const HeaderStyled = styled.header`
     text-align: center;
     width: 100%;
-    padding-top: 5vmin;
+    padding: 0.5vmin;
     position: sticky;
     top: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: #dad7d2;
+    color: var(--color-primary-light);
 `;
 
 export default HeaderStyled;
