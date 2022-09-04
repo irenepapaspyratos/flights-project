@@ -4,6 +4,7 @@ import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import {HashRouter} from "react-router-dom";
+import './i18n/i18n'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <HashRouter>
-            <App/>
+            <React.Suspense fallback={"loading..."}>
+                <App/>
+            </React.Suspense>
         </HashRouter>
     </React.StrictMode>
 );
