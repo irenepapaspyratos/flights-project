@@ -23,5 +23,24 @@ const Button = styled.button<{ variant: string }>`
                 font-weight: bold;
             `};
 `;
-
 export default Button;
+
+export const ButtonFlag = styled.button<{ variant: string }>`
+    height: 4vmin;
+    width: 6.5vmin;
+    margin: 1vmin;
+    border-radius: 2px;
+    border: 1px solid black;
+    background-size: cover;
+    background-position: center;
+    background-image: url(${props => `/images/flag_${props.variant}.png`});
+
+    :active {
+        border-color: var(--color-primary-light);
+    }
+
+    :hover {
+        box-shadow: 5px 5px 5px var(--color-primary-dark);
+        cursor: pointer;
+    }
+`;

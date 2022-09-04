@@ -2,7 +2,7 @@ import MainStyled from "../ui/Main.styled";
 import Button from "../ui/Button.styled";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import Airport from "../airport/Airport";
+import Airport from "../types/Airport";
 
 export default function TheButton() {
     const [show, setShow] = useState(false);
