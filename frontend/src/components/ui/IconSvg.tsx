@@ -7,10 +7,10 @@ const svgObject = {
 
 function IconSvg(props: {
     variant: string,
-    size: string | undefined,
-    color: string | undefined,
-    margin: string | undefined,
-    padding: string | undefined,
+    size?: string,
+    color?: string,
+    margin?: string,
+    padding?: string,
 }) {
 
     const color: string = !props.color ? 'currentColor' : props.color;
