@@ -4,14 +4,13 @@ import ContainerStyled from "./ui/Container.styled";
 import Header from "./Header";
 import AllRoutes from "./AllRoutes";
 import {ToastContainer} from 'react-toastify';
-import {UseTranslationResponse} from "react-i18next";
 
-export default function Layout(props: { translationHook: UseTranslationResponse<"translation"> }) {
+export default function Layout() {
     const location = useLocation();
 
     return (
         <ContainerStyled path={location.pathname}>
-            <Header translationHook={props.translationHook}/>
+            <Header/>
             <AllRoutes/>
             <ToastContainer/>
         </ContainerStyled>

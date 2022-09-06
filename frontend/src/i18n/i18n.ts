@@ -4,11 +4,13 @@ import en from './locales/en/translations.json';
 import de from './locales/de/translations.json';
 import es from './locales/es/translations.json';
 
+const currentLanguage: string | null = localStorage.getItem("currentLanguage");
 
 i18n
     .use(initReactI18next)
     .init({
         fallbackLng: 'en',
+        lng: currentLanguage !== null ? currentLanguage : "",
         resources: {
             en: {
                 translations: en

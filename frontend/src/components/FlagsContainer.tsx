@@ -1,13 +1,17 @@
 import FlagsContainerStyled from "./ui/FlagsContainer.styled";
 import React from "react";
-import {UseTranslationResponse} from "react-i18next";
 import {ButtonFlag} from "./ui/Button.styled";
+import {useStore} from "./hooks/useStore";
+import {useTranslation, UseTranslationResponse} from "react-i18next";
 
-export default function FlagsContainer(props: { translationHook: UseTranslationResponse<"translation"> }) {
+export default function FlagsContainer() {
+    const translationHook: UseTranslationResponse<"translation"> = useTranslation();
+    const setLanguage = useStore((state) => state.setLanguage);
+
 
     const handleLanguage = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await props.translationHook.i18n.changeLanguage(event.currentTarget.value);
+        await setLanguage(event.currentTarget.value, translationHook);
     }
 
     return (
