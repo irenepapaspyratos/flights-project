@@ -1,9 +1,9 @@
 import {NavLink} from "react-router-dom";
 import NavigationStyled from "./ui/Navigation.styled";
-import {UseTranslationResponse} from "react-i18next";
+import {useTranslation} from "react-i18next";
 
-export default function Navigation(props: { translationHook: UseTranslationResponse<"translation", undefined> }) {
-    const t = props.translationHook.t;
+export default function Navigation() {
+    const {t} = useTranslation();
 
     return (
         <NavigationStyled>
