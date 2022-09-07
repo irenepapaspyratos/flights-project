@@ -1,10 +1,16 @@
 import create from "zustand";
 import {UseTranslationResponse} from "react-i18next";
+import getDbData from "../../services/db/get-dbData";
+import Airport from "../types/Airport";
+import Airline from "../types/Airline";
 
 type ZustandState = {
     language: string,
     setLanguage: (value: string, translationHook: UseTranslationResponse<"translation">) => Promise<void>,
     getLanguage: () => void,
+    airports: Airport[],
+    setData: (identifier: string) => Promise<any> | undefined,
+    getData: (identifier: string) => Array<Airport | Airline>,
 }
 
 export const useStore = create<ZustandState>((set) => ({
@@ -17,6 +23,21 @@ export const useStore = create<ZustandState>((set) => ({
     },
     getLanguage: () => {
         localStorage.getItem("currentLanguage");
+    },
+
+
+    airports: [],
+    airlines: [],
+    setData: async (identifier: string) => {
+        const resultList = await getDbData(identifier);
+        console.log(resultList)
+        set({[identifier]: resultList});
+        localStorage.setItem(identifier, JSON.stringify(resultList));
+    },
+    getData: (identifier: string) => {
+        const storageString = localStorage.getItem(identifier);
+
+        return JSON.parse(storageString ? storageString : "[]");
     }
 
 }));

@@ -2,7 +2,7 @@ type airport = {
     id: string,
     iata: string,
     icao: string,
-    airportName: string,
+    name: string,
     locationServed: string,
     time: string,
     dst: string,
