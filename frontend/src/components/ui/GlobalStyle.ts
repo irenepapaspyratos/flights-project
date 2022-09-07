@@ -4,6 +4,9 @@ const GlobalStyle = createGlobalStyle`
     :root {
         --color-primary-dark: #001D29;
         --color-primary-light: #E9E9ED;
+        --color-grey: #7D919A;
+        --color-sea: #35BABA;
+        --color-sun: #FFCA1C;
     }
 
     * {
