@@ -29,7 +29,7 @@ export const ButtonFlag = styled.button<{ variant: string }>`
     height: 4vmin;
     width: 6.5vmin;
     margin: 1vmin;
-    border-radius: 2px;
+    border-radius: 1px;
     border: 1px solid black;
     background-size: cover;
     background-position: center;
