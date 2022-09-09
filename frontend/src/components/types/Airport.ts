@@ -1,4 +1,4 @@
-type airport = {
+type Airport = {
     id: string,
     iata: string,
     icao: string,
@@ -8,4 +8,4 @@ type airport = {
     dst: string,
 }
 
-export default airport;
+export default Airport;

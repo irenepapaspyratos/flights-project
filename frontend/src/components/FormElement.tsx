@@ -48,7 +48,7 @@ export default function FormElement(props: {
                                 <datalist id={ident + "Datalist"}>
                                     {props.formElementVariable?.filter(element =>
                                         element.iata.toLowerCase().startsWith(value)
-                                        || element.locationServed.toLowerCase().startsWith(value)
+                                        || (element as Airport).locationServed.toLowerCase().startsWith(value)
                                     )
                                         .sort((a, b) => {
                                             return a.iata.localeCompare(b.iata);
