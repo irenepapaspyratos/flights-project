@@ -11,11 +11,9 @@ export default function FormElement(props: {
     const ident: string = props.variant.replace('_', '-');
     const label: string = capitalizeFirstLetter(props.variant.split("_")[1]);
 
-
     const [value, setValue] = useState("")
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
     const [startDate, endDate] = dateRange;
-
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
@@ -80,7 +78,6 @@ export default function FormElement(props: {
                                 isClearable={true}
                             />
                         )}
-
                     </>
                 )
                 :

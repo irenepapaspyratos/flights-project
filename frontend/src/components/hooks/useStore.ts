@@ -25,18 +25,15 @@ export const useStore = create<ZustandState>((set) => ({
         localStorage.getItem("currentLanguage");
     },
 
-
     airports: [],
     airlines: [],
     setData: async (identifier: string) => {
         const resultList = await getDbData(identifier);
-        console.log(resultList)
         set({[identifier]: resultList});
         localStorage.setItem(identifier, JSON.stringify(resultList));
     },
     getData: (identifier: string) => {
         const storageString = localStorage.getItem(identifier);
-
         return JSON.parse(storageString ? storageString : "[]");
     }
 
