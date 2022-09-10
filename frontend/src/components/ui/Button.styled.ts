@@ -26,8 +26,8 @@ const Button = styled.button<{ variant: string }>`
 export default Button;
 
 export const ButtonFlag = styled.button<{ variant: string }>`
-    height: 4vmin;
-    width: 6.5vmin;
+    height: 5vmin;
+    width: 7.5vmin;
     margin: 1vmin;
     border-radius: 1px;
     border: 1px solid black;

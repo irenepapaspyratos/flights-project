@@ -34,6 +34,13 @@ const GlobalStyle = createGlobalStyle`
         background-color: #630618;
         content: "X";
     }
+
+    .hamburger-react {
+        position: absolute !important;
+        top: 0;
+        color: var(--color-primary-light);
+        z-index: 999;
+    }
 `;
 
 export default GlobalStyle;
