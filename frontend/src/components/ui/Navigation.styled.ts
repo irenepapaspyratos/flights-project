@@ -13,8 +13,11 @@ const NavigationStyled = styled.nav<{ toggled: boolean }>`
     box-shadow: 10px 10px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-top: 2rem;
+    gap: 1rem;
+    font-size: larger;
     transform: ${({toggled}) =>
             toggled && css`translateX(55vmin);`};
     transition: transform 0.300s ease-in-out;
