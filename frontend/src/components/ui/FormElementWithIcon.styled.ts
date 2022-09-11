@@ -6,7 +6,7 @@ const FormElementWithIconStyled = styled.div<{ variantIcon: string }>`
     flex-wrap: nowrap;
 
     ${({variantIcon}) =>
-            variantIcon === 'date' ? css`width: 100%;` : css`width: 32%;`};
+            variantIcon === 'date' ? css`width: 70%;` : css`width: 32%;`};
 
     svg {
         width: 10%
@@ -17,6 +17,7 @@ const FormElementWithIconStyled = styled.div<{ variantIcon: string }>`
                 variantIcon === 'date' ? css`width: 90%;` : css`width: 85%;`};
         line-height: 2;
         margin: 1vmin 2vmin;
+        background-color: var(--color-primary-light);
     }
 
 `;

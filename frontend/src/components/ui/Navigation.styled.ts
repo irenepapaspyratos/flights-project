@@ -18,6 +18,7 @@ const NavigationStyled = styled.nav<{ toggled: boolean }>`
     padding: 3rem 1rem 2rem 2rem;
     gap: 1rem;
     font-size: larger;
+    text-shadow: var(--shadow-text);
     transform: ${({toggled}) =>
             toggled && css`translateX(59vmin);`};
     transition: transform 0.300s ease-in-out;

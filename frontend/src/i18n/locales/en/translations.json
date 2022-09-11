@@ -1,6 +1,7 @@
 {
   "home": {
     "title": "Home",
-    "birdText": "Searching for the cheapest flight ever..."
+    "birdText": "Searching for the cheapest flight ever...",
+    "searchButton": "Go !"
   }
 }
