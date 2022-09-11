@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const FormStyled = styled.form<{ id: string }>`
+    position: relative;
     max-width: 800px;
     display: flex;
     flex-direction: row;
