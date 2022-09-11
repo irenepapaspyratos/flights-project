@@ -1,5 +1,10 @@
-import HomeStyled from "../ui/Home.styled";
+import SearchBar from "../SearchBar";
+import MainStyled from "../ui/Main.styled";
 
 export default function Home() {
-    return <HomeStyled>Here comes the sun</HomeStyled>
+    return (
+        <MainStyled>
+            <SearchBar page={"home"}/>
+        </MainStyled>
+    );
 }

@@ -72,7 +72,7 @@ public class AirportService {
                 uniqueIdService.buildUUID(),
                 airportFromApi.iata(),
                 airportFromApi.icao(),
-                airportFromApi.airportName(),
+                airportFromApi.name(),
                 airportFromApi.locationServed(),
                 airportFromApi.time(),
                 airportFromApi.dst()
@@ -91,7 +91,7 @@ public class AirportService {
                             uniqueIdService.buildUUID(),
                             airportWithoutId.iata(),
                             airportWithoutId.icao(),
-                            airportWithoutId.airportName(),
+                            airportWithoutId.name(),
                             airportWithoutId.locationServed(),
                             airportWithoutId.time(),
                             airportWithoutId.dst()
@@ -113,7 +113,7 @@ public class AirportService {
                                     airportRepo.findAirportByIata(airportWithoutId.iata()).id() : uniqueIdService.buildUUID(),
                             airportWithoutId.iata(),
                             airportWithoutId.icao(),
-                            airportWithoutId.airportName(),
+                            airportWithoutId.name(),
                             airportWithoutId.locationServed(),
                             airportWithoutId.time(),
                             airportWithoutId.dst()

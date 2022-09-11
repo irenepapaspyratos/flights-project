@@ -1,10 +1,13 @@
 import Navigation from "./Navigation";
 import HeaderStyled from "./ui/Header.styled";
+import FlagsContainer from "./FlagsContainer";
+import React from "react";
 
 export default function Header() {
     return (
         <HeaderStyled>
-            <h1>Find your Flight</h1>
+            <FlagsContainer/>
+            <h1>FLIGHTS</h1>
             <Navigation/>
         </HeaderStyled>
     );

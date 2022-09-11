@@ -1,11 +1,11 @@
-type airport = {
+type Airport = {
     id: string,
     iata: string,
     icao: string,
-    airportName: string,
+    name: string,
     locationServed: string,
     time: string,
     dst: string,
 }
 
-export default airport;
+export default Airport;

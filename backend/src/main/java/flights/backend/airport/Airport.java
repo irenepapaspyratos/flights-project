@@ -8,7 +8,7 @@ public record Airport(
         @Id String id,
         String iata,
         String icao,
-        String airportName,
+        String name,
         String locationServed,
         String time,
         String dst
