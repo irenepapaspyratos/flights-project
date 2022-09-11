@@ -25,6 +25,15 @@ const GlobalStyle = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+
+    .react-datepicker-wrapper {
+        text-align: justify;
+    }
+
+    .react-datepicker__close-icon::after {
+        background-color: #630618;
+        content: "X";
+    }
 `;
 
 export default GlobalStyle;

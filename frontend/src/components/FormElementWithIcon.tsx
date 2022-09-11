@@ -11,8 +11,8 @@ export default function FormElementWithIcon(props: {
                                             }
 ) {
     return (
-        <FormElementWithIconStyled>
-            <IconSvg variant={props.variantIcon}/>
+        <FormElementWithIconStyled variantIcon={props.variantIcon}>
+            <IconSvg variant={props.variantIcon} margin={"auto 2vmin"}/>
             <FormElement
                 variant={props.formId + "_" + props.variantIcon}
                 formElementType={props.formElementType}

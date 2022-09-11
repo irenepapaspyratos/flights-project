@@ -18,7 +18,7 @@ function IconSvg(props: {
 
     return (
         <svg
-            viewBox="0 0 24 24"
+            viewBox={key === 'date' ? "0 1 28 28" : "0 0 24 24"}
             style={{
                 width: (!props.size ? '24' : props.size) + 'px',
                 height: (!props.size ? '24' : props.size) + 'px',
@@ -27,7 +27,9 @@ function IconSvg(props: {
                 color: color,
             }}
         >
-            <path fill={color} d={svgObject[key]}/>
+            <path
+                fill={color}
+                d={svgObject[key]}/>
         </svg>
     );
 }
