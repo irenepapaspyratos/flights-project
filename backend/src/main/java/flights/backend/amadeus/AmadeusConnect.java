@@ -6,9 +6,7 @@ import com.amadeus.exceptions.ResponseException;
 import com.amadeus.referenceData.Locations;
 import com.amadeus.resources.FlightOfferSearch;
 import com.amadeus.resources.Location;
-import org.springframework.stereotype.Service;
 
-@Service
 enum AmadeusConnect {
     INSTANCE;
     private final Amadeus amadeus;

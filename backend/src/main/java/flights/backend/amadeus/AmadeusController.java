@@ -12,15 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/amadeus")
 public class AmadeusController {
 
-    private final AmadeusService amadeusService;
-
-    public AmadeusController(AmadeusService amadeusService) {
-        this.amadeusService = amadeusService;
-    }
-
     @GetMapping("/locations")
     public Location[] locations(@RequestParam(required = true) String keyword) throws ResponseException {
-        return amadeusService.getAmadeusLocations(keyword);
+        return AmadeusConnect.INSTANCE.location(keyword);
     }
 
     @GetMapping("/flights")
@@ -31,6 +25,6 @@ public class AmadeusController {
                                        @RequestParam(required = false) String returnDate,
                                        @RequestParam(required = false) Integer max)
             throws ResponseException {
-        return amadeusService.getFlights(origin, destination, departDate, adults, returnDate, max);
+        return AmadeusConnect.INSTANCE.flights(origin, destination, departDate, adults, returnDate, max);
     }
 }
