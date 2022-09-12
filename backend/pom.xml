@@ -69,6 +69,25 @@
             <artifactId>mockwebserver</artifactId>
             <version>4.10.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.amadeus</groupId>
+            <artifactId>amadeus-java</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>2.33.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

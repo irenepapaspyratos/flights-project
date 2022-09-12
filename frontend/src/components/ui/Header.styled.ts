@@ -10,6 +10,10 @@ const HeaderStyled = styled.header`
     flex-direction: column;
     justify-content: center;
     color: var(--color-primary-light);
+
+    h1 {
+        text-shadow: var(--shadow-text);
+    }
 `;
 
 export default HeaderStyled;

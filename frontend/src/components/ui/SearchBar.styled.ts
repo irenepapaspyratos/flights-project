@@ -15,6 +15,7 @@ const SearchBarStyled = styled.section<{ page: string }>`
 
     input {
         color: var(--color-primary-dark);
+        padding: 0 0 0 0.5rem;
     }
 `;
 

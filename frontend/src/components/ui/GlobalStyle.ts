@@ -6,7 +6,9 @@ const GlobalStyle = createGlobalStyle`
         --color-primary-light: #E9E9ED;
         --color-grey: #7D919A;
         --color-sea: #35BABA;
+        --color-seaB: #67A1AD;
         --color-sun: #FFCA1C;
+        --shadow-text: 1px 1px 2px var(--color-primary-dark);
     }
 
     * {
