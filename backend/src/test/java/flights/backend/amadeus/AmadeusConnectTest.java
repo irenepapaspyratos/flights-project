@@ -109,11 +109,11 @@ class AmadeusConnectTest {
 
     @Test
     void AmadeusBuilder_NoId() {
-        assertThrows(NullPointerException.class, () -> Amadeus.builder(null, "secret").build());
+        assertThrows(NullPointerException.class, () -> Amadeus.builder(null, "secret"));
     }
 
     @Test
     void AmadeusBuilder_NoSecret() {
-        assertThrows(NullPointerException.class, () -> Amadeus.builder("id", null).build());
+        assertThrows(NullPointerException.class, () -> Amadeus.builder("id", null));
     }
 }
