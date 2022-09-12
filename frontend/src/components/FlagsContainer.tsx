@@ -8,8 +8,7 @@ export default function FlagsContainer() {
     const translationHook: UseTranslationResponse<"translation"> = useTranslation();
     const setLanguage = useStore(state => state.setLanguage);
     const [active, setIsActive] = useState(localStorage.getItem("currentLanguage"));
-
-
+    
     const handleLanguage = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setIsActive(event.currentTarget.value);

@@ -17,8 +17,7 @@ public class AmadeusService {
     public Location[] getAmadeusLocations(String keyword) throws ResponseException {
         return amadeusConnect.location(keyword);
     }
-
-
+    
     public FlightOfferSearch[] getFlights(String origin,
                                           String destination,
                                           String departDate,

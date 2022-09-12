@@ -19,7 +19,6 @@ const FormElementWithIconStyled = styled.div<{ variantIcon: string }>`
         margin: 1vmin 2vmin;
         background-color: var(--color-primary-light);
     }
-
 `;
 
 export default FormElementWithIconStyled;
