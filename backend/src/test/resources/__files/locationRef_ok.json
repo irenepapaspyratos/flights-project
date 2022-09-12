@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "count": 10
+  },
+  "data": [
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "HEATHROW",
+      "detailedName": "LONDON/GB:HEATHROW",
+      "timeZoneOffset": "+01:00",
+      "iataCode": "LHR",
+      "geoCode": {
+        "latitude": 51.47294,
+        "longitude": -0.45061
+      },
+      "address": {
+        "cityName": "LONDON",
+        "cityCode": "LON",
+        "countryName": "UNITED KINGDOM",
+        "countryCode": "GB",
+        "regionCode": "EUROP"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 45.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "GATWICK",
+      "detailedName": "LONDON/GB:GATWICK",
+      "timeZoneOffset": "+01:00",
+      "iataCode": "LGW",
+      "geoCode": {
+        "latitude": 51.15609,
+        "longitude": -0.17818
+      },
+      "address": {
+        "cityName": "LONDON",
+        "cityCode": "LON",
+        "countryName": "UNITED KINGDOM",
+        "countryCode": "GB",
+        "regionCode": "EUROP"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 27.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "STANSTED",
+      "detailedName": "LONDON/GB:STANSTED",
+      "timeZoneOffset": "+01:00",
+      "iataCode": "STN",
+      "geoCode": {
+        "latitude": 51.885,
+        "longitude": 0.235
+      },
+      "address": {
+        "cityName": "LONDON",
+        "cityCode": "LON",
+        "countryName": "UNITED KINGDOM",
+        "countryCode": "GB",
+        "regionCode": "EUROP"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 15.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "LUTON",
+      "detailedName": "LONDON/GB:LUTON",
+      "timeZoneOffset": "+01:00",
+      "iataCode": "LTN",
+      "geoCode": {
+        "latitude": 51.87472,
+        "longitude": -0.36833
+      },
+      "address": {
+        "cityName": "LONDON",
+        "cityCode": "LON",
+        "countryName": "UNITED KINGDOM",
+        "countryCode": "GB",
+        "regionCode": "EUROP"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 10.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "LONGDONGBAO INTL",
+      "detailedName": "GUIYANG/CN:LONGDONGBAO INTL",
+      "timeZoneOffset": "+08:00",
+      "iataCode": "KWE",
+      "geoCode": {
+        "latitude": 26.53852,
+        "longitude": 106.8007
+      },
+      "address": {
+        "cityName": "GUIYANG",
+        "cityCode": "KWE",
+        "countryName": "CHINA",
+        "countryCode": "CN",
+        "regionCode": "ASIA"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 7.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "LONGJIA INTL",
+      "detailedName": "CHANGCHUN/CN:LONGJIA INTL",
+      "timeZoneOffset": "+08:00",
+      "iataCode": "CGQ",
+      "geoCode": {
+        "latitude": 43.99621,
+        "longitude": 125.6854
+      },
+      "address": {
+        "cityName": "CHANGCHUN",
+        "cityCode": "CGQ",
+        "countryName": "CHINA",
+        "countryCode": "CN",
+        "regionCode": "ASIA"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 4.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "CITY AIRPORT",
+      "detailedName": "LONDON/GB:CITY AIRPORT",
+      "timeZoneOffset": "+01:00",
+      "iataCode": "LCY",
+      "geoCode": {
+        "latitude": 51.50528,
+        "longitude": 0.05528
+      },
+      "address": {
+        "cityName": "LONDON",
+        "cityCode": "LON",
+        "countryName": "UNITED KINGDOM",
+        "countryCode": "GB",
+        "regionCode": "EUROP"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 4.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "DAUGHERTY FIELD",
+      "detailedName": "LONG BEACH/CA/US:DAUGHERTY FIE",
+      "timeZoneOffset": "-07:00",
+      "iataCode": "LGB",
+      "geoCode": {
+        "latitude": 33.81778,
+        "longitude": -118.1517
+      },
+      "address": {
+        "cityName": "LONG BEACH",
+        "cityCode": "LGB",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "regionCode": "NAMER"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 2.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "LONDON ASHFORD",
+      "detailedName": "LYDD/GB:LONDON ASHFORD",
+      "timeZoneOffset": "+01:00",
+      "iataCode": "LYX",
+      "geoCode": {
+        "latitude": 50.95611,
+        "longitude": 0.93917
+      },
+      "address": {
+        "cityName": "LYDD",
+        "cityCode": "LYX",
+        "countryName": "UNITED KINGDOM",
+        "countryCode": "GB",
+        "regionCode": "EUROP"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 2.0
+        }
+      }
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "LONG ISLAND MACARTHUR",
+      "detailedName": "ISLIP/NY/US:LONG ISLAND MACART",
+      "timeZoneOffset": "-04:00",
+      "iataCode": "ISP",
+      "geoCode": {
+        "latitude": 40.78992,
+        "longitude": -73.09764
+      },
+      "address": {
+        "cityName": "ISLIP",
+        "cityCode": "ISP",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "regionCode": "NAMER"
+      },
+      "analytics": {
+        "travelers": {
+          "score": 1.0
+        }
+      }
+    }
+  ]
+}
