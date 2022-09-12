@@ -6,8 +6,9 @@ import com.amadeus.exceptions.ResponseException;
 import com.amadeus.referenceData.Locations;
 import com.amadeus.resources.FlightOfferSearch;
 import com.amadeus.resources.Location;
-import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
 
+@Service
 enum AmadeusConnect {
     INSTANCE;
     private final Amadeus amadeus;
@@ -24,7 +25,8 @@ enum AmadeusConnect {
                 .and("subType", Locations.AIRPORT));
     }
 
-    public FlightOfferSearch[] flights(String origin, String destination, String departDate, String adults, String returnDate, @NonNull int max) throws ResponseException {
+    public FlightOfferSearch[] flights(String origin, String destination, String departDate, String adults, String returnDate, Integer max) throws ResponseException {
+        max = max != null && max > 0 ? max : 1;
         return amadeus.shopping.flightOffersSearch.get(
                 Params.with("originLocationCode", origin)
                         .and("destinationLocationCode", destination)
