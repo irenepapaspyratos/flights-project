@@ -12,6 +12,12 @@ const ContainerStyled = styled.div<{ path: string }>`
                 background-image: url("/images/BirdPlaneSearching.jpg");
             `
     };
+    ${({path}) =>
+            path === '/flightlist' &&
+            css`
+                background-image: url("/images/BirdBeachRelaxing.jpg");
+            `
+    };
 `;
 
 export default ContainerStyled;

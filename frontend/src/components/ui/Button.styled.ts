@@ -20,6 +20,7 @@ const Button = styled.button<{ variant: string }>`
                 background: darkred;
                 height: 3rem;
                 width: 8rem;
+                margin: 3rem auto;
                 font-weight: bold;
             `};
 
