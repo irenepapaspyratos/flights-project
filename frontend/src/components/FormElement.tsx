@@ -27,7 +27,7 @@ export default function FormElement(props: {
 
     useEffect(() => {
         setFormState({dateDatepicker: dateRange});
-    }, [dateRange])
+    }, [dateRange, setFormState])
 
     return (
         <>
