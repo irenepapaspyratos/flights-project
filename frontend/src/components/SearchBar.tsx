@@ -6,7 +6,7 @@ import FormStyled from "./ui/Form.styled";
 import Button from "./ui/Button.styled";
 import {useTranslation} from "react-i18next";
 import {FormEvent} from "react";
-import utcStringToYYYYMmDD from "../services/helpers/utcStringToYYYY-mm-DD";
+import utcStringToYYYYmmDD from "../services/helpers/utcStringToYYYY-mm-DD";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -19,8 +19,8 @@ export default function SearchBar(props: { page: string }) {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const departureDateString = utcStringToYYYYMmDD(formState.dateDatepicker[0])
-        const returnDateString = (formState.dateDatepicker[1] !== null ? "&returnDate=" + utcStringToYYYYMmDD(formState.dateDatepicker[1]) : "");
+        const departureDateString = utcStringToYYYYmmDD(formState.dateDatepicker[0])
+        const returnDateString = (formState.dateDatepicker[1] !== null ? "&returnDate=" + utcStringToYYYYmmDD(formState.dateDatepicker[1]) : "");
 
         return axios.get("/api/amadeus/flights?origin=" + formState.originDatalist +
             "&destination=" + formState.destinationDatalist +

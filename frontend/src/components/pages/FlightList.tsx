@@ -12,9 +12,11 @@ export default function FlightList() {
 
     return (
         <MainStyled page={"flightlist"}>
-            {optionsState.length > 0 &&
-                <>{options}</>
-            }
+            <form>
+                {optionsState.length > 0 &&
+                    <>{options}</>
+                }
+            </form>
         </MainStyled>
     );
 }

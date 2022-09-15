@@ -6,11 +6,11 @@ const SearchBarStyled = styled.section<{ page: string }>`
     max-width: 100%;
     margin: 0 2vmin;
     padding: 2vmin 2vmin;
-    background-color: #E9E9ED24;
+    background-image: linear-gradient(transparent, #E9E9ED45);
     border-radius: 5px;
     backdrop-filter: blur(5px);
     box-shadow: 5px 5px 15px #0000005e;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid #FFFFFF1A;
     color: var(--color-primary-light);
 
     input {

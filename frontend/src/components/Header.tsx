@@ -1,13 +1,10 @@
 import HeaderStyled from "./ui/Header.styled";
 import FlagsContainer from "./FlagsContainer";
-import React, {Dispatch, SetStateAction} from "react";
-import Hamburger from "hamburger-react";
+import React from "react";
 
-export default function Header(props: { toggled: boolean, toggle: Dispatch<SetStateAction<boolean>> }) {
+export default function Header(props: { path: string }) {
     return (
-        <HeaderStyled>
-            <Hamburger toggled={props.toggled} toggle={props.toggle} size={24} distance={"sm"}
-                       label="Show navigation"/>
+        <HeaderStyled path={props.path}>
             <FlagsContainer/>
             <h1>FLIGHTS</h1>
         </HeaderStyled>

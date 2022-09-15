@@ -27,7 +27,8 @@ const Button = styled.button<{ variant: string }>`
     ${({variant}) =>
             variant === 'search' &&
             css`
-                background-color: var(--color-seaB);
+                background-color: #cb8a04;
+                border-color: #513700ad;
                 height: 1.9rem;
                 width: auto;
                 min-width: 21vmin;
