@@ -33,7 +33,10 @@ export default function SearchBar(props: { page: string }) {
                 return response.data;
             })
             .then(data => {
-                setOptions(data)
+                setOptions(data);
+                sessionStorage.setItem("origin", formState.originDatalist);
+                sessionStorage.setItem("destination", formState.destinationDatalist);
+                sessionStorage.setItem("oneWay", formState.dateDatepicker[1] !== null ? "no" : "yes")
             })
             .then(() => navigate("/flightlist"));
 

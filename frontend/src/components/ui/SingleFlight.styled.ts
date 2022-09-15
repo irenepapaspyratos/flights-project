@@ -3,6 +3,8 @@ import styled from "styled-components";
 const SingleFlightStyled = styled.article`
     text-align: center;
     height: auto;
+    display: flex;
+    flex-direction: row;
     width: 80%;
     max-width: 500%;
     margin: 8vmin auto;
@@ -18,9 +20,8 @@ const SingleFlightStyled = styled.article`
     font-weight: bolder;
     text-shadow: 2px 2px 3px black;
 
-    input {
-        color: var(--color-primary-dark);
-        padding: 0 0 0 0.5rem;
+    div {
+        margin: auto;
     }
 `;
 

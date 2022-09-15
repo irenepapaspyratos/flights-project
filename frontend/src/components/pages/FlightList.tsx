@@ -6,8 +6,8 @@ import MainStyled from "../ui/Main.styled";
 export default function FlightList() {
     const optionsState = useStore(state => state.flightOptions);
 
-    const options = optionsState.map((flight: Flight) =>
-        <SingleFlight key={flight.id} flight={flight}/>
+    const options = optionsState.map((flight: Flight, index) =>
+        <SingleFlight key={flight.id} index={index} flights={optionsState}/>
     );
 
     return (

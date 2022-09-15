@@ -2,15 +2,22 @@ import React from "react";
 import Flight from "./types/Flight";
 import SingleFlightStyled from "./ui/SingleFlight.styled";
 
-export default function SingleFlight(props: { flight: Flight }) {
+export default function SingleFlight(props: { flights: Flight[], index: number }) {
+    const flight: Flight = props.flights[props.index];
+    const stops: number = flight.itineraries[0].segments.length;
+
     return (
         <SingleFlightStyled>
-            <h2>{props.flight.price.grandTotal + " " + props.flight.price.currency}</h2>
             <div>
-                Available Seats: {props.flight.numberOfBookableSeats}
-            </div>
-            <div>
-                One Way: {props.flight.oneWay ? "True" : "False"}
+                <h3>
+                    {flight.price.grandTotal + " " + flight.price.currency}
+                </h3>
+                <div>
+                    Stops: {stops}
+                </div>
+                <div>
+                    Available Seats: {flight.numberOfBookableSeats}
+                </div>
             </div>
         </SingleFlightStyled>
     );
