@@ -5,10 +5,7 @@ import SingleFlightStyled from "./ui/SingleFlight.styled";
 export default function SingleFlight(props: { flight: Flight }) {
     return (
         <SingleFlightStyled>
-            <h2></h2>
-            <div>
-                {"Price: " + props.flight.price.grandTotal + " " + props.flight.price.currency}
-            </div>
+            <h2>{props.flight.price.grandTotal + " " + props.flight.price.currency}</h2>
             <div>
                 Available Seats: {props.flight.numberOfBookableSeats}
             </div>
