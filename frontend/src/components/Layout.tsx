@@ -13,10 +13,10 @@ export default function Layout() {
 
     return (
         <ContainerStyled path={location.pathname}>
-            <Hamburger toggled={isOpen} toggle={setIsOpen} size={24} distance={"sm"} label="Show navigation"/>
-            <Header/>
+            <Header path={location.pathname}/>
             <AllRoutes/>
             <Navigation toggled={isOpen} toggle={setIsOpen}/>
+            <Hamburger toggled={isOpen} toggle={setIsOpen} size={24} distance={"sm"}/>
             <ToastContainer/>
         </ContainerStyled>
     );

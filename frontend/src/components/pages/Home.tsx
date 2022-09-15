@@ -3,7 +3,7 @@ import MainStyled from "../ui/Main.styled";
 
 export default function Home() {
     return (
-        <MainStyled>
+        <MainStyled page={"home"}>
             <SearchBar page={"home"}/>
         </MainStyled>
     );

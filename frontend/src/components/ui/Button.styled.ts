@@ -20,13 +20,15 @@ const Button = styled.button<{ variant: string }>`
                 background: darkred;
                 height: 3rem;
                 width: 8rem;
+                margin: 3rem auto;
                 font-weight: bold;
             `};
 
     ${({variant}) =>
             variant === 'search' &&
             css`
-                background-color: var(--color-seaB);
+                background-color: #cb8a04;
+                border-color: #513700ad;
                 height: 1.9rem;
                 width: auto;
                 min-width: 21vmin;

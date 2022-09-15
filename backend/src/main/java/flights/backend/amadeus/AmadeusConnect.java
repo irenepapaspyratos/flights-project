@@ -24,7 +24,7 @@ enum AmadeusConnect {
     }
 
     public FlightOfferSearch[] flights(String origin, String destination, String departDate, String adults, String returnDate, Integer max) throws ResponseException {
-        max = max != null && max > 0 ? max : 1;
+        max = max != null && max > 0 ? max : 10;
         return amadeus.shopping.flightOffersSearch.get(
                 Params.with("originLocationCode", origin)
                         .and("destinationLocationCode", destination)

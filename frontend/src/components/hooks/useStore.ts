@@ -3,6 +3,7 @@ import {UseTranslationResponse} from "react-i18next";
 import getDbData from "../../services/db/get-dbData";
 import Airport from "../types/Airport";
 import Airline from "../types/Airline";
+import Flight from "../types/Flight";
 
 type ZustandState = {
     language: string,
@@ -11,6 +12,10 @@ type ZustandState = {
     airports: Airport[],
     setData: (identifier: string) => Promise<any> | undefined,
     getData: (identifier: string) => Array<Airport | Airline>,
+    flightsFormState: { peopleNumber: string; originDatalist: string; destinationDatalist: string; dateDatepicker: string; },
+    setFlightsFormState: (args: {}) => void,
+    flightOptions: Flight[],
+    setFlightOptions: (flights: Flight[]) => void,
 }
 
 export const useStore = create<ZustandState>((set) => ({
@@ -35,6 +40,22 @@ export const useStore = create<ZustandState>((set) => ({
     getData: (identifier: string) => {
         const storageString = localStorage.getItem(identifier);
         return JSON.parse(storageString ? storageString : "[]");
-    }
+    },
 
+    flightsFormState: {peopleNumber: "", originDatalist: "", destinationDatalist: "", dateDatepicker: ""},
+    setFlightsFormState: (args: {}) => {
+        let result = {};
+        const list: [string, string][] = Object.entries(args);
+        for (let [key, value] of list) {
+            result = {...result, [key]: value}
+        }
+        set(state => {
+            return {flightsFormState: {...state.flightsFormState, ...result}};
+        });
+    },
+
+    flightOptions: [],
+    setFlightOptions: (flights: Flight[]) => {
+        set({flightOptions: flights});
+    },
 }));

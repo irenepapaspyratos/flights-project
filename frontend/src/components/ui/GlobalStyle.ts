@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
         --color-sea: #35BABA;
         --color-seaB: #67A1AD;
         --color-sun: #FFCA1C;
-        --shadow-text: 1px 1px 2px var(--color-primary-dark);
+        --shadow-text: 2px 2px 5px black;
     }
 
     * {
@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .hamburger-react {
-        position: absolute !important;
+        position: fixed !important;
         top: 0;
         color: var(--color-primary-light);
         z-index: 999;
