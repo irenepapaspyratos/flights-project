@@ -9,6 +9,7 @@ export default function Navigation(props: { toggled: boolean, toggle: Dispatch<S
     return (
         <NavigationStyled toggled={props.toggled}>
             <NavLink onClick={() => props.toggle(false)} to={'/'}>{t('home.title')}</NavLink>
+            <NavLink onClick={() => props.toggle(false)} to={'/airports'}>{t('airports.title')}</NavLink>
             <NavLink onClick={() => props.toggle(false)} to={'/the-button'}>The BUTTON</NavLink>
         </NavigationStyled>
     )

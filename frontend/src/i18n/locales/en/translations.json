@@ -1,7 +1,16 @@
 {
   "home": {
     "title": "Home",
+    "subtitle": "Find the cheapest flight ever...",
     "birdText": "Searching for the cheapest flight ever...",
     "searchButton": "Go !"
+  },
+  "flightlist": {
+    "title": "Flights",
+    "seats": "Available Seats"
+  },
+  "airports": {
+    "title": "Airports",
+    "subtitle": "Airports of the world"
   }
 }

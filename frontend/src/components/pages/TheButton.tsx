@@ -21,8 +21,6 @@ export default function TheButton() {
             </Button>
             <ul>
                 {show && airports?.map(airport => {
-                    // eslint-disable-next-line react/style-prop-object
-                    // @ts-ignore
                     return <li key={airport.id}>{airport.iata} {airport.name}</li>
                 })}
             </ul>

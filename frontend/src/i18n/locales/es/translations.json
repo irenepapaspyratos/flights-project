@@ -1,7 +1,16 @@
 {
   "home": {
     "title": "Home",
+    "subtitle": "Encuentra el vuelo más barato de todos...",
     "birdText": "Busca el vuelo más barato de todos...",
     "searchButton": "¡Busca!"
+  },
+  "flightlist": {
+    "title": "Vuelos",
+    "seats": "Asientos disponibles"
+  },
+  "airports": {
+    "title": "Aeropuertos",
+    "subtitle": "Aeropuertos del mundo"
   }
 }

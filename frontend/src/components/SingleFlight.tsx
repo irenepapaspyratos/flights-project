@@ -1,13 +1,15 @@
 import React from "react";
 import Flight from "./types/Flight";
-import SingleFlightStyled from "./ui/SingleFlight.styled";
+import SingleItemStyled from "./ui/SingleItem.styled";
+import {useTranslation} from "react-i18next";
 
 export default function SingleFlight(props: { flights: Flight[], index: number }) {
+    const {t} = useTranslation();
     const flight: Flight = props.flights[props.index];
     const stops: number = flight.itineraries[0].segments.length;
 
     return (
-        <SingleFlightStyled>
+        <SingleItemStyled>
             <div>
                 <h3>
                     {flight.price.grandTotal + " " + flight.price.currency}
@@ -16,9 +18,9 @@ export default function SingleFlight(props: { flights: Flight[], index: number }
                     Stops: {stops}
                 </div>
                 <div>
-                    Available Seats: {flight.numberOfBookableSeats}
+                    {t('flightlist.seats')}: {flight.numberOfBookableSeats}
                 </div>
             </div>
-        </SingleFlightStyled>
+        </SingleItemStyled>
     );
 }

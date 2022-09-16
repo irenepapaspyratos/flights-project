@@ -21,6 +21,15 @@ const ContainerStyled = styled.div<{ path: string }>`
                 background-position: 50% 70%;
             `
     };
+
+    ${({path}) =>
+            path === '/airports' &&
+            css`
+                background-image: url("/images/BirdPlaneWaiting.jpg");
+                background-size: auto 95%;
+                background-position: 50% 95%;
+            `
+    };
 `;
 
 export default ContainerStyled;

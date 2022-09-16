@@ -6,7 +6,7 @@ const MainStyled = styled.main<{ page: string }>`
     display: flex;
     justify-content: center;
     ${({page}) =>
-            (page === 'flightlist' || page === 'thebutton') && css`
+            (page === 'flightlist' || page === 'airports') && css`
                 flex-direction: column;
                 margin-top: 0;
             `};
