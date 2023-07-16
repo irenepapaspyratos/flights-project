@@ -2,6 +2,8 @@
 
 This is the final project of my Java Development Certification in 2022 at Neue Fische. It is an application to find the cheapest flights using the Amadeus-API.
 
+<image src="https://user-images.githubusercontent.com/101578008/253823656-84e7bbc7-3361-4b22-b9fa-31fd3dae78c1.mp4" controls="controls" style="max-height:640px; min-height:200px;"/>
+
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=irenepapaspyratos_flights-project_frontend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=irenepapaspyratos_flights-project_frontend)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=irenepapaspyratos_flights-project_frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=irenepapaspyratos_flights-project_frontend)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=irenepapaspyratos_flights-project_frontend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=irenepapaspyratos_flights-project_frontend)
